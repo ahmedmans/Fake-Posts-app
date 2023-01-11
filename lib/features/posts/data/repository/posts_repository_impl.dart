@@ -23,7 +23,7 @@ class PostsRepositoryImpl implements PostsRepository {
 
   @override
   Future<Either<Failure, List<PostsEntity>>> getAllPosts() async {
-    if (await baseInternetConnectionStatus.intrenetConnected) {
+    if (await baseInternetConnectionStatus.isConnected) {
       try {
         final remotePosts = await basePostsRemoteDataSource.getAllPosts();
         basePostsLocleDataSource.cachePosts(remotePosts);
@@ -37,7 +37,7 @@ class PostsRepositoryImpl implements PostsRepository {
         final loclePosts = await basePostsLocleDataSource.getAllCachedPosts();
 
         return Right(loclePosts);
-      } on ServerException {
+      } on EmptyCacheException {
         return Left(EmptyCacheFailure());
       }
     }
@@ -45,8 +45,7 @@ class PostsRepositoryImpl implements PostsRepository {
 
   @override
   Future<Either<Failure, Unit>> addPost(PostsEntity post) async {
-    PostsModel postsModel =
-        PostsModel(id: post.id, title: post.title, body: post.body);
+    PostsModel postsModel = PostsModel(title: post.title, body: post.body);
     return await _getMessage(
         () => basePostsRemoteDataSource.updatePost(postsModel));
   }
@@ -66,7 +65,7 @@ class PostsRepositoryImpl implements PostsRepository {
 
   Future<Either<Failure, Unit>> _getMessage(
       AddOrDeleteOrUpdate addOrDeleteOrUpdate) async {
-    if (await baseInternetConnectionStatus.intrenetConnected) {
+    if (await baseInternetConnectionStatus.isConnected) {
       try {
         // await basePostsRemoteDataSource.deletePost(id);
         await addOrDeleteOrUpdate();

@@ -55,7 +55,7 @@ class ServicesLocator {
     /// Core
     sl.registerLazySingleton<BaseInternetConnectionStatus>(
       () => InternetConnectionStat(
-        internetConnectionChecker: sl(),
+        connectionChecker: sl(),
       ),
     );
 

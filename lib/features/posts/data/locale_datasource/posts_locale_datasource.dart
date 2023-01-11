@@ -19,9 +19,8 @@ class PostsLocleDataSource implements BasePostsLocleDataSource {
   @override
   Future<Unit> cachePosts(List<PostsModel> postsModel) async {
     List postModelToJson = postsModel.map((posts) => posts.toJson()).toList();
-    await sharedPreferences.setString(
-        CACHE_POSTS, json.encode(postModelToJson));
-    return unit;
+    sharedPreferences.setString(CACHE_POSTS, json.encode(postModelToJson));
+    return Future.value(unit);
   }
 
   @override

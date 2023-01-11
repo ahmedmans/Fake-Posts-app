@@ -2,7 +2,7 @@ import 'package:posts_app/features/posts/domain/entities/posts_entity.dart';
 
 class PostsModel extends PostsEntity {
   const PostsModel({
-    required super.id,
+    super.id,
     required super.title,
     required super.body,
   });

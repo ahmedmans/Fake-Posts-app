@@ -50,10 +50,10 @@ class PostOptionsBloc extends Bloc<PostOptionsEvent, PostOptionsState> {
 
   String _failureMessage(Failure failure) {
     switch (failure.runtimeType) {
-      case ServerException:
+      case ServerFailure:
         return SERVER_FAILURE_MESSAGE;
 
-      case OfflineException:
+      case OfflineFailure:
         return OFFLINE_FAILURE_MESSAGE;
 
       default:

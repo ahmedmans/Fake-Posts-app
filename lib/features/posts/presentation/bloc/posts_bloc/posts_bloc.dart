@@ -1,7 +1,6 @@
-import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:posts_app/core/error/exceptions.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posts_app/core/error/failure.dart';
 import 'package:posts_app/core/strings/failure_strings.dart';
 import 'package:posts_app/features/posts/domain/entities/posts_entity.dart';
@@ -34,12 +33,12 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
 
   String _failureMessage(Failure failure) {
     switch (failure.runtimeType) {
-      case ServerException:
+      case ServerFailure:
         return SERVER_FAILURE_MESSAGE;
-      case EmptyCacheException:
+      case EmptyCacheFailure:
         return EMPTY_CACHE_FAILURE_MESSAGE;
 
-      case OfflineException:
+      case OfflineFailure:
         return OFFLINE_FAILURE_MESSAGE;
 
       default:
